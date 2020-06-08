@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "395794764180",
+    "firebase_url": "https://pnlrepoter.firebaseio.com",
+    "project_id": "pnlrepoter",
+    "storage_bucket": "pnlrepoter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395794764180:android:6162ecf1713ff3f81cff81",
+        "android_client_info": {
+          "package_name": "com.pnl.googleauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395794764180-ip9l4dp0m5l2pg1mjid7hh71bb5rfbm3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pnl.googleauth",
+            "certificate_hash": "d09c468d3d844831852013b1c24d85168525036c"
+          }
+        },
+        {
+          "client_id": "395794764180-mghq8cd4bj04kor6bdnjbuprpgo39rg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY1MMtf7HwFRabKa37KXL-WOJftX0tnSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395794764180-mghq8cd4bj04kor6bdnjbuprpgo39rg7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
