@@ -66,8 +66,7 @@ class MyLoginPage extends StatelessWidget {
                 stream: bloc.userStream,
                 builder: (context, snapshot) => MaterialButton(
                   onPressed: () { 
-                    
-                    Future<User> futureUser = bloc.loginRole();
+                    bloc.loginRole();
                     Future<User> cur = snapshot.data;
                     cur.then((value){
                       if (value.role.toString() == userRole) {

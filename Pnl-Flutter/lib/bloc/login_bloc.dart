@@ -6,17 +6,14 @@ class LoginBloc{
   StreamController _user = new StreamController();
   Stream get userStream =>  _user.stream; 
   
-  Future<User> loginRole() async{
+  void loginRole() async{
     print("bloc alo");
     var loginValidation = new LoginValidations();
     var result = await loginValidation.login();
     if(result==null){
       _user.sink.addError("Not signed up yet");
-      return null;
-      
     }else{
       _user.sink.add(result);
-      return result;
     }
     
   }
