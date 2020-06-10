@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:loginui/constant.dart';
+import 'package:loginui/constant/constant.dart';
 
 void main() {
   runApp(TransactionDetailPage());

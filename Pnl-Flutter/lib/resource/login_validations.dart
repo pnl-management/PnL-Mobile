@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:loginui/constant.dart';
+import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/userModel.dart';
 import 'package:http/http.dart' as http;
 class LoginValidations{

@@ -12,7 +12,9 @@ const kPrimaryColor = Color(0xFF3382CC);
 final kShadowColor = Color(0xFFB7B7B7).withOpacity(.16);
 final kActiveShadowColor = Color(0xFF4056C6).withOpacity(.15);
 final apiUrl = "https://pnlreporterswd.azurewebsites.net";
-
+final userRole = '2';
+final investorRole ='1';
+final accountantRole = '3';
 // Text Style
 const kHeadingTextStyle = TextStyle(
   fontSize: 22,

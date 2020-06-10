@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/userModel.dart';
 import 'package:loginui/ui/user.dart';
 import 'package:loginui/ui/investor.dart';
@@ -66,11 +65,9 @@ class MyLoginPage extends StatelessWidget {
                 stream: bloc.userStream,
                 builder: (context, snapshot) => MaterialButton(
                   onPressed: () { 
-                    
                     Future<User> futureUser = bloc.loginRole();
-                    Future<User> cur = snapshot.data;
-                    cur.then((value){
-                      if (value.role.toString() == userRole) {
+                    futureUser.then((value){
+                      if (value.role.toString() == '2') {
                       var navigator = Navigator.push(
                           context,
                           new MaterialPageRoute(
@@ -83,7 +80,7 @@ class MyLoginPage extends StatelessWidget {
                                 ));
                       }
                     }
-                    if (value.role.toString() == investorRole) {
+                    if (value.role.toString() == '1') {
                       var navigator = Navigator.push(
                           context,
                           new MaterialPageRoute(
@@ -96,18 +93,29 @@ class MyLoginPage extends StatelessWidget {
                                 ));
                       }
                     }
-                    if(value.role.toString() == accountantRole){
-                      if(snapshot.hasError){
-                        return AlertDialog(
-                          title: Text('Invalid Role'),
-                          content: Text(snapshot.error),
-                        );
-                      }
-                    }
                     });
                     
-                   
-                    
+                    // if (user.role.toString() == '1') {
+                    //   var navigator = Navigator.push(
+                    //       context,
+                    //       new MaterialPageRoute(
+                    //           builder: (context) => InvestorHomeScreen(user)));
+                    //   if (navigator == true) {
+                    //     showDialog(
+                    //         context: context,
+                    //         builder: (context) => AlertDialog(
+                    //               title: Text("Success"),
+                    //             ));
+                    //   }
+                    // }
+                    // if(role.toString() == '3'){
+                    //   var navigator =  Navigator.push(context, new MaterialPageRoute(builder: (context)=>UserPage())
+                    // );
+                    //   if(navigator == true){
+                    //     showDialog(context: context,
+                    //     builder : (context) => AlertDialog(title: Text("Success"),));
+                    //   }
+                    // }
                   },
                   color: Colors.green,
                   textColor: Colors.white,
