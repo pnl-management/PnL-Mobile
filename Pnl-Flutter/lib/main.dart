@@ -1,10 +1,14 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/userModel.dart';
 import 'package:loginui/ui/user.dart';
 import 'package:loginui/ui/investor.dart';
-import 'package:loginui/bloc/login_bloc.dart';
+
+import 'bloc/login_bloc.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -35,8 +39,20 @@ class MyLoginPage extends StatelessWidget {
         children: <Widget>[
           new Stack(
             alignment: Alignment.center,
-            children: <Widget>[
-              new Container(),
+            children: <Widget>[  
+              new Container(
+                child: StreamBuilder(
+                stream: bloc.userStream,
+                builder: (context, snapshot){
+                  print("Phuc map dit");
+                      print("Phuc map dit qua");
+                      var user = snapshot.data;
+                      print(snapshot.error);
+                      loginNavigator(user, context,snapshot.error);
+                    return Container();
+                  } 
+                ),
+              ),
               new Container(
                 height: 60.0,
                 width: 60.0,
@@ -50,73 +66,71 @@ class MyLoginPage extends StatelessWidget {
           new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 80.0),
                 child: new Text(
                   "PnL Báo Cáo",
                   style: new TextStyle(fontSize: 30.0),
-                ),
+                ), 
               )
             ],
           ),
           new Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              StreamBuilder(
-                stream: bloc.userStream,
-                builder: (context, snapshot) => MaterialButton(
+              MaterialButton(
                   onPressed: () { 
                     bloc.loginRole();
-                    Future<User> cur = snapshot.data;
-                    cur.then((value){
-                      if (value.role.toString() == userRole) {
-                      var navigator = Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => new UserHomeScreen(value)));
-                      if (navigator == true) {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text("Success"),
-                                ));
-                      }
-                    }
-                    if (value.role.toString() == investorRole) {
-                      var navigator = Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => InvestorHomeScreen(value)));
-                      if (navigator == true) {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: Text("Success"),
-                                ));
-                      }
-                    }
-                    if(value.role.toString() == accountantRole){
-                      if(snapshot.hasError){
-                        return AlertDialog(
-                          title: Text('Invalid Role'),
-                          content: Text(snapshot.error),
-                        );
-                      }
-                    }
-                    });
-                    
-                   
-                    
                   },
                   color: Colors.green,
                   textColor: Colors.white,
                   child: Text("Login With Google"),
                 ),
-              )
+              
             ],
           ),
         ],
       ),
     ));
+  }
+  void loginNavigator(User value,BuildContext context,String error){
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if(value !=null){
+      if (value.role.toString() == userRole) {
+      var navigator = Navigator.push(
+      context,
+      new MaterialPageRoute(
+         builder: (context) => new UserHomeScreen(value)));
+      if (navigator == true) {
+        Fluttertoast.showToast(msg: "Signed as " + value.fullName,
+                            toastLength: Toast.LENGTH_LONG,
+                            );
+      }
+    }
+    if (value.role.toString() == investorRole) {
+      var navigator = Navigator.push(
+      context,
+      new MaterialPageRoute(
+         builder: (context) => new InvestorHomeScreen(value)));
+      if (navigator == true) {
+        Fluttertoast.showToast(msg: "Signed as " + value.fullName,
+                            toastLength: Toast.LENGTH_LONG,
+                            );
+      }
+    }
+    if(value.role.toString() == accountantRole){
+      Fluttertoast.showToast(msg: "Accountant is not allowed to use mobile app",
+                            toastLength: Toast.LENGTH_LONG,
+                            );
+    }}
+    if(error!=null){
+      Fluttertoast.showToast(msg: error,
+                            toastLength: Toast.LENGTH_LONG,
+                            );
+    }
+    
+     });
+    
   }
 }
