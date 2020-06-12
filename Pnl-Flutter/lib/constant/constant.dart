@@ -15,6 +15,8 @@ final apiUrl = "https://pnlreporterswd.azurewebsites.net";
 final userRole = '2';
 final investorRole ='1';
 final accountantRole = '3';
+final revenue = '1';
+final expense = '2';
 // Text Style
 const kHeadingTextStyle = TextStyle(
   fontSize: 22,

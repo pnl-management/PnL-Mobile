@@ -1,54 +1,54 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:loginui/bloc/userTotalTransaction_bloc.dart';
 import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/userModel.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 void main() {
   runApp(UserPage());
 }
 
-class UserPage extends StatelessWidget{
-  
+class UserPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Store Page',
       theme: ThemeData(
         scaffoldBackgroundColor: kBackgroundColor,
         fontFamily: "Poppins",
-        
       ),
-      
     );
   }
 }
 
-class UserHomeScreen extends StatelessWidget{
+class UserHomeScreen extends StatelessWidget {
   UserHomeScreen(this.user);
   final User user;
-  
+  UserTotalTransactionBloc bloc = new UserTotalTransactionBloc();
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
+    bloc.getTotalTransactions(user.token);
     print("token : " + user.token);
+
     return Scaffold(
       body: Column(
         children: <Widget>[
           ClipPath(
             clipper: MyClipper(),
-             child: Container(
-               padding: EdgeInsets.only(left:40,top:50,right:20),
-              height:350,
+            child: Container(
+              padding: EdgeInsets.only(left: 40, top: 50, right: 20),
+              height: 350,
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Color(0xFF3383CD),
-                    Color(0xFF11249F)
-                  ]
-                ),
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [Color(0xFF3383CD), Color(0xFF11249F)]),
                 image: DecorationImage(
                   image: AssetImage("assets/images/virus.png"),
                 ),
@@ -57,110 +57,121 @@ class UserHomeScreen extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Align(
-                    alignment: Alignment.topRight,
-                    child: SvgPicture.asset("assets/icons/menu.svg")
-                    ),
-                    SizedBox(height: 20,),
-                    Expanded(
+                      alignment: Alignment.topRight,
+                      child: SvgPicture.asset("assets/icons/menu.svg")),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
                       child: Stack(
-                        children: <Widget>[
-                          SvgPicture.asset("assets/icons/shop.svg",
-                          width: 150,
-                          fit: BoxFit.fitWidth,
-                          alignment: Alignment.topCenter,
-                          ),
-                          Positioned(
-                            top: 20,
-                            left: 200,
-                            
-                            child: Text(
-                              user.brandName + "\n" + user.storeName,style: kHeadingTextStyle.copyWith(color: Colors.white) ,
-                            ),
-                          ),
-                          Container(),
-                        ],
-                      )),
+                    children: <Widget>[
+                      SvgPicture.asset(
+                        "assets/icons/shop.svg",
+                        width: 150,
+                        fit: BoxFit.fitWidth,
+                        alignment: Alignment.topCenter,
+                      ),
+                      Positioned(
+                        top: 20,
+                        left: 200,
+                        child: Text(
+                          user.brandName + "\n" + user.storeName,
+                          style:
+                              kHeadingTextStyle.copyWith(color: Colors.white),
+                        ),
+                      ),
+                      Container(),
+                    ],
+                  )),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal:20),
-            child: Column(children: <Widget>[
-              Row(
-                children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Chi tiết về giao dịch\n",
-                          style: kTitleTextstyle,
-                        ),
-                        TextSpan(
-                          text: "Từ 1 tháng 5 đến 31 tháng 5",
-                          style: TextStyle(
-                            color:kTextLightColor,
-                          )
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: StreamBuilder(
+                      stream: bloc.periodTransactionStream,
+                      builder: (context, snapshot) =>Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Chi tiết về giao dịch\n",
+                            style: kTitleTextstyle,
+                          ),
+                          TextSpan(
+                              text: snapshot.data,
+                              style: TextStyle(
+                                color: kTextLightColor,
+                              )),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      "Xem thêm",
+                      style: TextStyle(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 30,
+                          color: kShadowColor,
                         ),
                       ],
                     ),
-                  ),
-                  Spacer(),
-                  Text(
-                    "Xem thêm",
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                  boxShadow:[
-                    BoxShadow(
-                      offset: Offset(0,4),
-                      blurRadius: 30,
-                      color: kShadowColor,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Counter(
-                      color: kInfectedColor,
-                      number: 30,
-                      title: "Doanh Thu",
+                    child: StreamBuilder(
+                      stream: bloc.userTotalTransactionStream,
+                      builder: (context, snapshot) => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Counter(
+                            color: kInfectedColor,
+                            number: snapshot.data[0],
+                            title: "Doanh Thu",
+                          ),
+                          Counter(
+                            color: kDeathColor,
+                            number: snapshot.data[1],
+                            title: "Chi Phí",
+                          ),
+                          Counter(
+                            color: kRecovercolor,
+                            number: (int.parse(snapshot.data[0]) - int.parse(snapshot.data[1])).toString()
+                                ,
+                            title: "Lợi Nhuận",
+                          ),
+                        ],
                       ),
-                    Counter(
-                      color: kDeathColor,
-                      number: 5,
-                      title: "Chi Phí",
-                      ),
-                    Counter(
-                      color: kRecovercolor,
-                      number: 25,
-                      title: "Lợi Nhuận",
-                      ),
-                  ],
-                ),
-              ),
-            ],),
+                    ))
+              ],
+            ),
           ),
-      ],),
+          )],
+      ),
+      
     );
   }
 }
 
 class Counter extends StatelessWidget {
-  final int number;
+  final String number;
   final Color color;
   final String title;
   const Counter({
@@ -188,35 +199,53 @@ class Counter extends StatelessWidget {
               color: Colors.transparent,
               border: Border.all(
                 color: color,
-                width:2,
+                width: 2,
               ),
             ),
           ),
         ),
-        SizedBox(height:10),
+        SizedBox(height: 10),
         Text(
-          "$number M",
-          style: TextStyle(fontSize: 40,color: color),
+          formatMoney(number),
+          style: TextStyle(fontSize: 20, color: color),
         ),
-        Text(title, style : kSubTextStyle),
+        Text(title, style: kSubTextStyle),
       ],
     );
   }
+
+  String formatMoney(String amount) {
+    print(amount);
+    if (amount.contains("-")) {
+      print("negative");
+      String money = amount.split("-")[1];
+      MoneyFormatterOutput fo =
+          FlutterMoneyFormatter(amount: double.parse(money)).output;
+          return "-" + fo.compactNonSymbol;
+    } else {
+      print("positive");
+      MoneyFormatterOutput fo =
+          FlutterMoneyFormatter(amount: double.parse(amount)).output;
+      print(fo.compactNonSymbol);
+      return fo.compactNonSymbol;
+    }
+  }
 }
 
-class MyClipper extends CustomClipper<Path>{
+class MyClipper extends CustomClipper<Path> {
   @override
-  Path getClip(Size size){
+  Path getClip(Size size) {
     var path = Path();
     path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(size.width/2, size.height, size.width, size.height-80);
+    path.quadraticBezierTo(
+        size.width / 2, size.height, size.width, size.height - 80);
     path.lineTo(size.width, 0);
     path.close();
     return path;
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper){
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
     return false;
   }
 }

@@ -1,5 +1,5 @@
 
-import 'package:loginui/models/userModel.dart';
+
 import 'package:loginui/resource/login_validations.dart';
 import 'dart:async';
 

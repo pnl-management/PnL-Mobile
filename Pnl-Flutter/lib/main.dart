@@ -44,12 +44,9 @@ class MyLoginPage extends StatelessWidget {
                 child: StreamBuilder(
                 stream: bloc.userStream,
                 builder: (context, snapshot){
-                  print("Phuc map dit");
-                      print("Phuc map dit qua");
-                      var user = snapshot.data;
-                      print(snapshot.error);
-                      loginNavigator(user, context,snapshot.error);
-                    return Container();
+                var user = snapshot.data;
+                loginNavigator(user, context,snapshot.error);
+                return Container();
                   } 
                 ),
               ),
