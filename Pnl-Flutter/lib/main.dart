@@ -44,8 +44,9 @@ class MyLoginPage extends StatelessWidget {
                 child: StreamBuilder(
                 stream: bloc.userStream,
                 builder: (context, snapshot){
+                  if(snapshot.hasData){
                 var user = snapshot.data;
-                loginNavigator(user, context,snapshot.error);
+                loginNavigator(user, context,snapshot.error);}
                 return Container();
                   } 
                 ),
@@ -93,6 +94,7 @@ class MyLoginPage extends StatelessWidget {
   }
   void loginNavigator(User value,BuildContext context,String error){
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      print(value.role);
       if(value !=null){
       if (value.role.toString() == userRole) {
       var navigator = Navigator.push(

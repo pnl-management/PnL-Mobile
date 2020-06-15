@@ -7,8 +7,9 @@ class Transaction {
   int revenue;
   int expense;
   String period;
+  int money;
 
   Transaction({
-    this.transactionId,this.transactionName,this.transactionDes,this.transactionType,this.transactionAccount,this.expense,this.revenue,this.period
+    this.transactionId,this.transactionName,this.transactionDes,this.transactionType,this.transactionAccount,this.expense,this.revenue,this.period,this.money
   });
 }

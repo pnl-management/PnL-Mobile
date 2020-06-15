@@ -1,7 +1,12 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:loginui/bloc/investorHomePage_bloc.dart';
 import 'package:loginui/constant/constant.dart';
+import 'package:loginui/models/transactionModel.dart';
 import 'package:loginui/models/userModel.dart';
+
 void main() {
   runApp(InvestorPage());
 }
@@ -25,118 +30,125 @@ class InvestorPage extends StatelessWidget{
 class InvestorHomeScreen extends StatelessWidget{
   InvestorHomeScreen(this.user);
   final User user;
+  InvestorHomePageBloc bloc = new InvestorHomePageBloc();
+  
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body: SingleChildScrollView(
-              child: Column(
-          children: <Widget>[
-            ClipPath(
-              clipper: MyClipper(),
-               child: Container(
-                 padding: EdgeInsets.only(left:40,top:50,right:20),
-                height:350,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Color(0xFF3383CD),
-                      Color(0xFF11249F)
-                    ]
-                  ),
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/virus.png"),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: SvgPicture.asset("assets/icons/menu.svg")
+    print(user.token+ "User token");
+    bloc.getTotalTransactions(user.token);
+    List<Transaction> data;
+        return Scaffold(
+          body: SingleChildScrollView(
+                  child: Column(
+              children: <Widget>[
+                ClipPath(
+                  clipper: MyClipper(),
+                   child: Container(
+                     padding: EdgeInsets.only(left:40,top:50,right:20),
+                    height:350,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0xFF3383CD),
+                          Color(0xFF11249F)
+                        ]
                       ),
-                      SizedBox(height: 20,),
-                      Expanded(
-                        child: Stack(
-                          children: <Widget>[
-                            SvgPicture.asset("assets/icons/investor.svg",
-                            width: 200,
-                            fit: BoxFit.fitWidth,
-                            alignment: Alignment.topCenter,
-                            ),
-                            Positioned(
-                              top: 20,
-                              left: 200,
-                              child: Text(
-                                "Xin Chào \nÔng " + user.fullName,style: kHeadingTextStyle.copyWith(color: Colors.white) ,
-                              ),
-                            ),
-                            Container(),
-                          ],
-                        )),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal:20),
-              child: Column(children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Tất Cả Giao Dịch Gần Nhất\n",
-                            style: kTitleTextstyle,
-                          ),
-                          TextSpan(
-                            text: "Từ 1 tháng 5 đến 31 tháng 5",
-                            style: TextStyle(
-                              color:kTextLightColor,
-                            )
-                          ),
-                        ],
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/virus.png"),
                       ),
                     ),
-                    Spacer(),
-                    Text(
-                      "Xem thêm",
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: SvgPicture.asset("assets/icons/menu.svg")
+                          ),
+                          SizedBox(height: 20,),
+                          Expanded(
+                            child: Stack(
+                              children: <Widget>[
+                                SvgPicture.asset("assets/icons/investor.svg",
+                                width: 200,
+                                fit: BoxFit.fitWidth,
+                                alignment: Alignment.topCenter,
+                                ),
+                                Positioned(
+                                  top: 20,
+                                  left: 200,
+                                  child: Text(
+                                    "Xin Chào \nÔng " + user.fullName,style: kHeadingTextStyle.copyWith(color: Colors.white) ,
+                                  ),
+                                ),
+                                Container(),
+                              ],
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal:20),
+                  child: StreamBuilder(
+                          stream: bloc.periodTransactionStream,
+                          builder: (context, snapshot) =>Column(children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Tất Cả Giao Dịch Gần Nhất\n",
+                                style: kTitleTextstyle,
+                              ),
+                              TextSpan(
+                                text: snapshot.data,
+                                style: TextStyle(
+                                  color:kTextLightColor,
+                                )
+                              ),
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          "Xem thêm",
+                          style: TextStyle(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child:StreamBuilder(
+                          stream: bloc.userTotalTransactionStream,
+                          builder: (context, snapshot) =>Column(
+                            children:<Widget>[ 
+                              
+                          for(var data in snapshot.data)
+                            PreventCard(
+                              title: data.transactionName,
+                              content: data.transactionDes,
+                              money: data.money,
+                              type: int.parse(data.transactionType.toString()),
+                            ),
+                          
                   ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                PreventCard(
-                  title: "Passio FPT",
-                  content: "Without store supplies, work is harder than I expected. I want to use some money to buy store supplies for the next few weeks",
-                  money: 2,
-                  color: kDeathColor,
-                ),
-                PreventCard(
-                  title: "Passio Nguyen Dinh Chieu",
-                  content: "We have just received some cash as a partial of payment from online orders",
-                  money: 3,
-                  color: kRecovercolor,
-                ),
-                PreventCard(
-                  title: "Passio Dien Bien Phu",
-                  content: "Maintaining",
-                  money: 1,
-                  color: kInfectedColor,
-                ),
-              ],),
+                
+                ))
+                      )],),
             ),
-        ],),
+              )],),
       ),
     );
+  
   }
 }
 
@@ -144,13 +156,40 @@ class PreventCard extends StatelessWidget {
   final String title;
   final String content;
   final int money;
-  final Color color;
+  final int type;
   const PreventCard({
-    Key key, this.title, this.content, this.money, this.color,
+    Key key, this.title, this.content, this.money, this.type,
   }) : super(key: key);
-
+  Color getColor(int type){
+    print("Type " + type.toString());
+    if(type.toString() == revenue){
+      print("return " + kRecovercolor.toString());
+      return kRecovercolor;
+    }
+    if(type.toString() == expense){
+      print("return " + kDeathColor.toString());
+      return kDeathColor;
+    }
+  }
+  String formatMoney(String amount) {
+    print(amount);
+    if (amount.contains("-")) {
+      print("negative");
+      String money = amount.split("-")[1];
+      MoneyFormatterOutput fo =
+          FlutterMoneyFormatter(amount: double.parse(money)).output;
+          return "-" + fo.compactNonSymbol;
+    } else {
+      print("positive");
+      MoneyFormatterOutput fo =
+          FlutterMoneyFormatter(amount: double.parse(amount)).output;
+      print(fo.compactNonSymbol);
+      return fo.compactNonSymbol;
+    }
+  }
   @override
   Widget build(BuildContext context) {
+    
     return SizedBox(
       height: 150,
       child: Stack(
@@ -189,8 +228,8 @@ class PreventCard extends StatelessWidget {
                   Align(
                     alignment: Alignment.topRight,
                     child:Text(
-                      "$money M",
-                      style: TextStyle(fontSize: 20,color: color),
+                      formatMoney(money.toString()),
+                      style: TextStyle(fontSize: 20,color: getColor(type)),
                     ),
                   ),
                 ],
