@@ -1,36 +1,21 @@
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:loginui/bloc/investorHomePage_bloc.dart';
+import 'package:loginui/bloc/userTotalTransaction_bloc.dart';
 import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/transactionModel.dart';
 import 'package:loginui/models/userModel.dart';
 
-class InvestorPage extends StatelessWidget{
-  @override
-  Widget build(BuildContext context){
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Store Page',
-      theme: ThemeData(
-        scaffoldBackgroundColor: kBackgroundColor,
-        fontFamily: "Poppins",
-        
-      ),
-      
-    );
-  }
-}
-
-class InvestorHomeScreen extends StatelessWidget{
-  InvestorHomeScreen(this.user);
+class UserTransactionDetails extends StatelessWidget{
+  UserTransactionDetails(this.user);
   final User user;
-  InvestorHomePageBloc bloc = new InvestorHomePageBloc();
+  UserTotalTransactionBloc bloc = new UserTotalTransactionBloc();
   
   @override
   Widget build(BuildContext context){
-    print(user.token+ "User token");
     bloc.getTotalTransactions(user.token);
     List<Transaction> data;
         return Scaffold(

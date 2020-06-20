@@ -6,6 +6,7 @@ import 'package:loginui/bloc/userTotalTransaction_bloc.dart';
 import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/userModel.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:loginui/ui/usertranasctiondetail.dart';
 
 void main() {
   runApp(UserPage());
@@ -111,13 +112,18 @@ class UserHomeScreen extends StatelessWidget {
                       ),
                     ),
                     Spacer(),
-                    Text(
-                      "Xem thêm",
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.w600,
+                    FlatButton(
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder:(context)=> UserTransactionDetails(user)));
+                      }, 
+                      child: Text(
+                        "Xem thêm",
+                        style: TextStyle(
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 SizedBox(

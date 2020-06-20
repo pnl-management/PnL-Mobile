@@ -34,5 +34,24 @@ class GetTransactions{
         list.add(periodDetails);
         return list;
       }
-  }
+   }
+   Future<List<Transaction>> seeAllTransaction (String token)async {
+    String url = apiUrl + "/api/Transactions/Index";
+    print(url);
+    var response =
+      await http.get(Uri.encodeFull(url), headers: {"Authorization": "Bearer " + token});
+    if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        List currentPeriod = data['currentPeriod'];
+        var period = currentPeriod[0]['period'];
+        var periodDetails = period['title'];
+        for(var current in currentPeriod){
+          var category = current['category'];
+          var type = category['type'].toString(); 
+        }
+        List<Transaction> list = new List();
+
+        return list;
+      }
+   }
 }

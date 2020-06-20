@@ -7,6 +7,10 @@ import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/transactionModel.dart';
 import 'package:loginui/models/userModel.dart';
 
+void main() {
+  runApp(InvestorPage());
+}
+
 class InvestorPage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
