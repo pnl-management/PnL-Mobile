@@ -26,15 +26,21 @@ class UserPage extends StatelessWidget {
   }
 }
 
-class UserHomeScreen extends StatelessWidget {
+class UserHomeScreen extends StatefulWidget {
   UserHomeScreen(this.user);
   final User user;
+
+  @override
+  _UserHomeScreenState createState() => _UserHomeScreenState();
+}
+
+class _UserHomeScreenState extends State<UserHomeScreen> {
   UserTotalTransactionBloc bloc = new UserTotalTransactionBloc();
 
   @override
   Widget build(BuildContext context) {
-    bloc.getTotalTransactions(user.token);
-    print("token : " + user.token);
+    bloc.getTotalTransactions(widget.user.token);
+    print("token : " + widget.user.token);
 
     return Scaffold(
       body: Column(
@@ -76,7 +82,7 @@ class UserHomeScreen extends StatelessWidget {
                         top: 20,
                         left: 200,
                         child: Text(
-                          user.brandName + "\n" + user.storeName,
+                          widget.user.brandName + "\n" + widget.user.storeName,
                           style:
                               kHeadingTextStyle.copyWith(color: Colors.white),
                         ),
@@ -114,7 +120,7 @@ class UserHomeScreen extends StatelessWidget {
                     Spacer(),
                     FlatButton(
                       onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder:(context)=> UserTransactionDetails(user)));
+                        Navigator.push(context, MaterialPageRoute(builder:(context)=> UserTransactionDetails(widget.user)));
                       }, 
                       child: Text(
                         "Xem thêm",
@@ -149,7 +155,7 @@ class UserHomeScreen extends StatelessWidget {
                         children: <Widget>[
                           Counter(
                             color: kInfectedColor,
-                            number: snapshot.data[0],
+                            number: snapshot.hasData ? snapshot.data[0] :  _UserHomeScreenState(),
                             title: "Doanh Thu",
                           ),
                           Counter(

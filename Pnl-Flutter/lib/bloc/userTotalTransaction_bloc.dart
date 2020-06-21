@@ -21,6 +21,8 @@ class UserTotalTransactionBloc{
       return true;
     }
   }
+
+  
   void dispose(){
     _userTotalTransations.close();
     _periodTransaction.close();

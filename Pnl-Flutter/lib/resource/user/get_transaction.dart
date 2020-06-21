@@ -45,12 +45,24 @@ class GetTransactions{
         List currentPeriod = data['currentPeriod'];
         var period = currentPeriod[0]['period'];
         var periodDetails = period['title'];
+        List<Transaction> list = new List();
         for(var current in currentPeriod){
           var category = current['category'];
           var type = category['type'].toString(); 
+          var id = current['id'].toString();
+          var name = current['name'].toString();
+          var des = current['description'].toString();
+          var value = current['value'].toString();
+          Transaction transaction =  Transaction(
+            transactionId: id,
+            transactionName: name,
+            transactionDes: des,
+            transactionType: type,
+            period: periodDetails,
+            money: int.parse(value)
+          );
+          list.add(transaction);
         }
-        List<Transaction> list = new List();
-
         return list;
       }
    }
