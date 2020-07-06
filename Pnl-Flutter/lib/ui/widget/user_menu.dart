@@ -9,14 +9,14 @@ import 'package:rxdart/rxdart.dart';
 class UserMenuPage extends StatelessWidget {
   bool isCollapsed = true;
   final Widget screen;
-  final User user;
-  UserMenuPage({Key key, this.screen, this.user}) : super(key: key);
+
+  UserMenuPage({Key key, this.screen}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          screen ?? UserHomeScreen(user),
+          screen ?? UserHomeScreen(),
           UserSideBar(),
         ],
       ),

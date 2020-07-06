@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:loginui/resource/get_sharedpref.dart';
 import 'package:loginui/resource/user/get_transaction.dart';
 
 class UserSeeAllTransactionsBloc{
@@ -8,8 +9,10 @@ class UserSeeAllTransactionsBloc{
   Stream get userTransactionsStream =>  _userTransations.stream;
   Stream get periodTransactionsStream =>  _periodofTransaction.stream;
   
-  Future<bool> showAllTransaction(String token) async{
+  Future<bool> showAllTransaction() async{
     print("bloc alo");
+    var user = await GetSharedPref().getUserInfo();
+    String token = user.token;
     var getTransaction = new GetTransactions();
     var result = await getTransaction.seeAllTransaction(token);
     if(result==null){

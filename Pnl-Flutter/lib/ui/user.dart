@@ -7,15 +7,24 @@ import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:loginui/ui/showallcategories.dart';
 import 'package:loginui/ui/userseemore.dart';
 
-class UserHomeScreen extends StatelessWidget {
-  UserHomeScreen(this.user);
-  final User user;
+class UserHomeScreen extends StatefulWidget {
+  
+  @override
+  _UserHomeScreenState createState() => _UserHomeScreenState();
+}
+
+class _UserHomeScreenState extends State<UserHomeScreen> {
   UserTotalTransactionBloc bloc = new UserTotalTransactionBloc();
 
   @override
+  void initState() {
+    // TODO: implement initState
+     bloc.getTotalTransactions();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
-    bloc.getTotalTransactions(user.token);
-    print("token : " + user.token);
+   
 
     return Scaffold(
       body: Column(
@@ -51,14 +60,22 @@ class UserHomeScreen extends StatelessWidget {
                         fit: BoxFit.fitWidth,
                         alignment: Alignment.topCenter,
                       ),
-                      Positioned(
-                        top: 20,
-                        left: 180,
-                        child: Text(
-                          user.brandName + "\n" + user.storeName,
-                          style:
-                              kHeadingTextStyle.copyWith(color: Colors.white),
-                        ),
+                      StreamBuilder<Object>(
+                        stream: bloc.userInfo,
+                        builder: (context, snapshot) {
+                          if(snapshot.hasData){
+                            return Positioned(
+                            top: 20,
+                            left: 180,
+                            child: Text(
+                              snapshot.data.toString().split("-")[0] + "\n" + snapshot.data.toString().split("-")[1],
+                              style:
+                                  kHeadingTextStyle.copyWith(color: Colors.white),
+                            ),
+                          );
+                          }
+                          
+                        }
                       ),
                       Container(),
                     ],
@@ -98,7 +115,7 @@ class UserHomeScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      UserSeeMore(user)));
+                                      UserSeeMore()));
                         },
                         child: Text(
                           "Xem thêm",
@@ -167,7 +184,7 @@ class UserHomeScreen extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowCategories(user)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowCategories()));
                     },
                                       child: Container(
                       width: double.infinity,

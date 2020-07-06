@@ -24,14 +24,11 @@ class InvestorPage extends StatelessWidget{
 }
 
 class InvestorHomeScreen extends StatelessWidget{
-  InvestorHomeScreen(this.user);
-  final User user;
   InvestorHomePageBloc bloc = new InvestorHomePageBloc();
   
   @override
   Widget build(BuildContext context){
-    print(user.token+ "User token");
-    bloc.getTotalTransactions(user.token);
+    bloc.getTotalTransactions();
     List<Transaction> data;
         return Scaffold(
           body: SingleChildScrollView(
@@ -76,7 +73,8 @@ class InvestorHomeScreen extends StatelessWidget{
                                   top: 20,
                                   left: 200,
                                   child: Text(
-                                    "Xin Chào \nÔng " + user.fullName,style: kHeadingTextStyle.copyWith(color: Colors.white) ,
+                                    ''
+                                    //"Xin Chào \nÔng " + user.fullName,style: kHeadingTextStyle.copyWith(color: Colors.white) ,
                                   ),
                                 ),
                                 Container(),

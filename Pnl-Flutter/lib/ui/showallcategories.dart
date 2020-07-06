@@ -8,8 +8,6 @@ import 'package:loginui/models/userModel.dart';
 import 'package:loginui/ui/widget/back_button.dart';
 
 class ShowCategories extends StatefulWidget {
-  ShowCategories(this.user);
-  final User user;
 
   @override
   _ShowCategoriesState createState() => _ShowCategoriesState();
@@ -19,12 +17,12 @@ class _ShowCategoriesState extends State<ShowCategories> {
   GetAllCategoriesBloc bloc = new GetAllCategoriesBloc();
 
   int offset;
-  
+
   @override
   void initState() {
     // TODO: implement initState
-    offset =0;
-    bloc.getAllCategories(widget.user.token, offset);
+    offset = 0;
+    bloc.getAllCategories(offset);
     offset = 5;
     super.initState();
   }
@@ -95,14 +93,19 @@ class _ShowCategoriesState extends State<ShowCategories> {
                         if (snapshot.hasData) {
                           print(snapshot.data.length);
                           bloc.getCatesLength(
-                              widget.user.token, snapshot.data.length);
-                          return Column(
-                            children: <Widget>[
-                              for (var data in snapshot.data)
-                                PreventCard(
-                                  title: data.cateName,
-                                ),
-                            ],
+                             snapshot.data.length);
+                          return GestureDetector(
+                            onTap: (){
+                              
+                            },
+                            child: Column(
+                              children: <Widget>[
+                                for (var data in snapshot.data)
+                                  PreventCard(
+                                    title: data.cateName,
+                                  ),
+                              ],
+                            ),
                           );
                         } else {
                           return CircularProgressIndicator(
@@ -114,42 +117,42 @@ class _ShowCategoriesState extends State<ShowCategories> {
                     ),
                   ),
                   StreamBuilder(
-                      stream: bloc.getLength,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data == "See") {
-                            return GestureDetector(
-                              onTap: () {
-                                bloc.getAllCategories(widget.user.token,offset);
-                                offset = 10;
-                              },
-                              child: Container(
-                                  width: double.infinity,
-                                  padding: EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey),
-                                      color: Colors.white),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 45.0),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(Icons.add, color: Colors.grey),
-                                        Text(
-                                          'XEM THÊM ',
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
-                            );
-                          }else{
-                            return Container();
-                          }
+                    stream: bloc.getLength,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data == "See") {
+                          return GestureDetector(
+                            onTap: () {
+                              bloc.getAllCategories( offset);
+                              offset = 10;
+                            },
+                            child: Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    color: Colors.white),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 45.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.add, color: Colors.grey),
+                                      Text(
+                                        'XEM THÊM ',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          );
+                        } else {
+                          return Container();
                         }
-                        return Container();
-                      },
-                      ),
-                      SizedBox(height:50),
+                      }
+                      return Container();
+                    },
+                  ),
+                  SizedBox(height: 50),
                 ],
               ),
             ),

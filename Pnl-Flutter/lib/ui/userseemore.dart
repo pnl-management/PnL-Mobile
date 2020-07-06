@@ -9,13 +9,12 @@ import 'package:loginui/models/userModel.dart';
 import 'package:loginui/ui/widget/back_button.dart';
 
 class UserSeeMore extends StatelessWidget {
-  UserSeeMore(this.user);
-  final User user;
+
   UserSeeAllTransactionsBloc bloc = new UserSeeAllTransactionsBloc();
 
   @override
   Widget build(BuildContext context) {
-    bloc.showAllTransaction(user.token);
+    bloc.showAllTransaction();
     List<Transaction> data;
     return Scaffold(
       body: SingleChildScrollView(

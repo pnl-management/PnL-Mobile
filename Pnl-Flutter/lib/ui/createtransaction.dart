@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:loginui/constant/constant.dart';
+import 'package:loginui/models/userModel.dart';
 import 'package:loginui/ui/widget/text_file.dart';
 
-void main() {
-  runApp(TransactionDetailScreen());
+
+class CreateTransaction extends StatefulWidget{
+  
+  @override
+  _CreateTransactionState createState() => _CreateTransactionState();
 }
 
-class TransactionDetailScreen extends StatelessWidget{
+class _CreateTransactionState extends State<CreateTransaction> {
   TextEditingController nameController = TextEditingController();
+
   TextEditingController moneyController = TextEditingController();
+
   TextEditingController desController = TextEditingController();
+
   @override
   Widget build(BuildContext context){
     return Scaffold(

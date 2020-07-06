@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:loginui/models/categoryModel.dart';
+import 'package:loginui/resource/get_sharedpref.dart';
 import 'package:loginui/resource/user/get_categories.dart';
 
 class GetAllCategoriesBloc{
@@ -10,8 +11,9 @@ class GetAllCategoriesBloc{
   Stream get getAll=> getAllCategoriesStream.stream;
 
   List<Category> list = List();
-  Future<bool> getAllCategories(String token,offset) async {
-    
+  Future<bool> getAllCategories(offset) async {
+    var user = await GetSharedPref().getUserInfo();
+    String token = user.token;
     var getAllCategory = GetCategories();
     var result = await getAllCategory.getCates(token,offset);
     print(result.length);
@@ -26,7 +28,9 @@ class GetAllCategoriesBloc{
     }
   }
 
-  Future<bool> getCatesLength(token, int length) async {
+  Future<bool> getCatesLength( int length) async {
+    var user = await GetSharedPref().getUserInfo();
+    String token = user.token;
     var getAllCategory = GetCategories();
     var result = await getAllCategory.getCatesLength(token);
     if(result > length){

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:loginui/models/transactionModel.dart';
+import 'package:loginui/resource/get_sharedpref.dart';
 import 'package:loginui/resource/investor/investor_transaction.dart';
 class InvestorHomePageBloc{
   StreamController _investorTransations = new StreamController();
@@ -8,8 +9,10 @@ class InvestorHomePageBloc{
   Stream get userTotalTransactionStream =>  _investorTransations.stream;
   Stream get periodTransactionStream =>  _periodTransaction.stream;
 
-  Future<bool> getTotalTransactions(String token) async{
+  Future<bool> getTotalTransactions() async{
     print("bloc alo");
+    var user = await GetSharedPref().getUserInfo();
+    String token = user.token;
     var investor_transaction = InvesterTransaction();
     var result = await investor_transaction.getTransactionsForInvestor(token);
     if(result==null){

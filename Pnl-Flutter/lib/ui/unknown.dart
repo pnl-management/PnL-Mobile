@@ -33,7 +33,7 @@ class InvestorHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(user.token + "User token");
-    bloc.getTotalTransactions(user.token);
+   //bloc.getTotalTransactions(user.token);
     List<Transaction> data;
     return Scaffold(
       body: SingleChildScrollView(
