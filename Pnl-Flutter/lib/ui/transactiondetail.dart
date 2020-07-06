@@ -1,28 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:loginui/constant/constant.dart';
+import 'package:loginui/ui/widget/text_file.dart';
 
 void main() {
-  runApp(TransactionDetailPage());
-}
-
-class TransactionDetailPage extends StatelessWidget{
-  @override
-  Widget build(BuildContext context){
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Store Page',
-      theme: ThemeData(
-        scaffoldBackgroundColor: kBackgroundColor,
-        fontFamily: "Poppins",
-        
-      ),
-      home: TransactionDetailScreen(),
-    );
-  }
+  runApp(TransactionDetailScreen());
 }
 
 class TransactionDetailScreen extends StatelessWidget{
+  TextEditingController nameController = TextEditingController();
+  TextEditingController moneyController = TextEditingController();
+  TextEditingController desController = TextEditingController();
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -60,15 +48,15 @@ class TransactionDetailScreen extends StatelessWidget{
                         child: Stack(
                           children: <Widget>[
                             SvgPicture.asset("assets/icons/phone.svg",
-                            width: 200,
+                            width: 150,
                             fit: BoxFit.fitWidth,
                             alignment: Alignment.topCenter,
                             ),
                             Positioned(
                               top: 20,
-                              left: 200,
+                              left: 150,
                               child: Text(
-                                "Chấp Nhận \nGiao Dịch",style: kHeadingTextStyle.copyWith(color: Colors.white) ,
+                                "\nTạo Giao Dịch",style: kHeadingTextStyle.copyWith(color: Colors.white) ,
                               ),
                             ),
                             Container(),
@@ -81,59 +69,53 @@ class TransactionDetailScreen extends StatelessWidget{
             Padding(
               padding: EdgeInsets.symmetric(horizontal:20),
               child: Column(children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Mã Giao Dịch\n",
-                            style: kTitleTextstyle,
-                          ),
-                          TextSpan(
-                            text: "#XXXXXXXXX",
-                            style: TextStyle(
-                              color:kTextLightColor,
-                            )
-                          ),
-                        ],
-                      ),
-                    ),
-                    Spacer(),
-                  ],
-                ),
+                // Row(
+                //   children: <Widget>[
+                //     RichText(
+                //       text: TextSpan(
+                //         children: [
+                //           TextSpan(
+                //             text: "Mã Giao Dịch\n",
+                //             style: kTitleTextstyle,
+                //           ),
+                //           TextSpan(
+                //             text: "#XXXXXXXXX",
+                //             style: TextStyle(
+                //               color:kTextLightColor,
+                //             )
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     Spacer(),
+                //   ],
+                // ),
                 SizedBox(
                   height: 20,
                 ),
-                PreventCard(
-                  title: "Trạng Thái",
-                  content: "Chờ phản hồi",
-                  height:100,
+                // PreventCard(
+                //   title: "Trạng Thái",
+                //   content: "Chờ phản hồi",
+                //   height:100,
+                // ),
+                // PreventCard(
+                //   title: "Loại Giao Dịch",
+                //   content: "Chi phí",
+                //   height:100,
+                // ),
+                MyTextField(
+                  label: "Tên Giao Dịch",
+                  controller: nameController,
                 ),
-                PreventCard(
-                  title: "Loại Giao Dịch",
-                  content: "Chi phí",
-                  height:100,
+                
+                 MyTextField(
+                  label: "Số Tiền",
+                  controller: moneyController,
+                  keyboard: TextInputType.number
                 ),
-                PreventCard(
-                  title: "Tên Giao Dịch",
-                  content: "Chi phí khác",
-                  height:100,
-                ),
-                PreventCard(
-                  title: "Ngày Tạo",
-                  content: "28/03/2020",
-                  height:100,
-                ),
-                PreventCard(
-                  title: "Số Tiền",
-                  content: "3M",
-                  height:100,
-                ),
-                PreventCard(
-                  title: "Mô Tả",
-                  content: "Without store supplies, work is harder than I expected. I want to use some money to buy store supplies for the next few weeks",
-                  height:200,
+                 MyTextField(
+                  label: "Mô Tả",
+                  controller: nameController,
                 ),
                 SizedBox(
                   height: 420,

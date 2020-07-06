@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:loginui/bloc/login_bloc.dart';
+import 'package:loginui/constant/constant.dart';
 
 void main() {
   runApp(MyApp());
@@ -62,10 +63,14 @@ class MyLoginPage extends StatelessWidget {
               MaterialButton(
                   onPressed: () { 
                     bloc.loginRole(context);
+                    CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                );
                   },
                   color: Colors.green,
                   textColor: Colors.white,
                   child: Text("Login With Google"),
+                  
                 ),
             ],
           ),

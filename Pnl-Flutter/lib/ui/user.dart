@@ -1,46 +1,21 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:loginui/bloc/userTotalTransaction_bloc.dart';
 import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/userModel.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
-import 'package:loginui/ui/usertranasctiondetail.dart';
+import 'package:loginui/ui/showallcategories.dart';
+import 'package:loginui/ui/userseemore.dart';
 
-void main() {
-  runApp(UserPage());
-}
-
-class UserPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Store Page',
-      theme: ThemeData(
-        scaffoldBackgroundColor: kBackgroundColor,
-        fontFamily: "Poppins",
-      ),
-    );
-  }
-}
-
-class UserHomeScreen extends StatefulWidget {
+class UserHomeScreen extends StatelessWidget {
   UserHomeScreen(this.user);
   final User user;
-
-  @override
-  _UserHomeScreenState createState() => _UserHomeScreenState();
-}
-
-class _UserHomeScreenState extends State<UserHomeScreen> {
   UserTotalTransactionBloc bloc = new UserTotalTransactionBloc();
 
   @override
   Widget build(BuildContext context) {
-    bloc.getTotalTransactions(widget.user.token);
-    print("token : " + widget.user.token);
+    bloc.getTotalTransactions(user.token);
+    print("token : " + user.token);
 
     return Scaffold(
       body: Column(
@@ -63,9 +38,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: SvgPicture.asset("assets/icons/menu.svg")),
+                  //MyBackButton(),
                   SizedBox(
                     height: 20,
                   ),
@@ -80,9 +53,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                       ),
                       Positioned(
                         top: 20,
-                        left: 200,
+                        left: 180,
                         child: Text(
-                          widget.user.brandName + "\n" + widget.user.storeName,
+                          user.brandName + "\n" + user.storeName,
                           style:
                               kHeadingTextStyle.copyWith(color: Colors.white),
                         ),
@@ -97,87 +70,131 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: StreamBuilder(
-                      stream: bloc.periodTransactionStream,
-                      builder: (context, snapshot) =>Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Chi tiết về giao dịch\n",
-                            style: kTitleTextstyle,
-                          ),
-                          TextSpan(
-                              text: snapshot.data,
-                              style: TextStyle(
-                                color: kTextLightColor,
-                              )),
-                        ],
-                      ),
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder:(context)=> UserTransactionDetails(widget.user)));
-                      }, 
-                      child: Text(
-                        "Xem thêm",
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                          fontWeight: FontWeight.w600,
+              stream: bloc.periodTransactionStream,
+              builder: (context, snapshot) => Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Chi tiết về giao dịch\n",
+                              style: kTitleTextstyle,
+                            ),
+                            TextSpan(
+                                text: snapshot.data,
+                                style: TextStyle(
+                                  color: kTextLightColor,
+                                )),
+                          ],
                         ),
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 30,
-                          color: kShadowColor,
+                      Spacer(),
+                      FlatButton(
+                        onPressed: () {
+                          Future.delayed(Duration(seconds: 3));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      UserSeeMore(user)));
+                        },
+                        child: Text(
+                          "Xem thêm",
+                          style: TextStyle(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ],
-                    ),
-                    child: StreamBuilder(
-                      stream: bloc.userTotalTransactionStream,
-                      builder: (context, snapshot) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Counter(
-                            color: kInfectedColor,
-                            number: snapshot.hasData ? snapshot.data[0] :  _UserHomeScreenState(),
-                            title: "Doanh Thu",
-                          ),
-                          Counter(
-                            color: kDeathColor,
-                            number: snapshot.data[1],
-                            title: "Chi Phí",
-                          ),
-                          Counter(
-                            color: kRecovercolor,
-                            number: (int.parse(snapshot.data[0]) - int.parse(snapshot.data[1])).toString()
-                                ,
-                            title: "Lợi Nhuận",
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 4),
+                            blurRadius: 30,
+                            color: kShadowColor,
                           ),
                         ],
                       ),
-                    ))
-              ],
+                      child: StreamBuilder(
+                          stream: bloc.userTotalTransactionStream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Counter(
+                                    color: kInfectedColor,
+                                    number: snapshot.hasData
+                                        ? snapshot.data[0]
+                                        : null,
+                                    title: "Doanh Thu",
+                                  ),
+                                  Counter(
+                                    color: kDeathColor,
+                                    number: snapshot.data[1],
+                                    title: "Chi Phí",
+                                  ),
+                                  Counter(
+                                    color: kRecovercolor,
+                                    number: (int.parse(snapshot.data[0]) -
+                                            int.parse(snapshot.data[1]))
+                                        .toString(),
+                                    title: "Lợi Nhuận",
+                                  ),
+                                ],
+                              );
+                            } else {
+                              return CircularProgressIndicator(
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF3383CD)),
+                              );
+                            }
+                          })),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowCategories(user)));
+                    },
+                                      child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey
+                          ),
+                          color: Colors.white
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left:45.0),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.add,color: Colors.grey),
+                              Text('ADD NEW TRANSACTION'
+                              ,style: TextStyle(color: Colors.grey),),
+                            ],
+                          ),
+                        )),
+                  ),
+                ],
+              ),
             ),
-          ),
-          )],
+          )
+        ],
       ),
-      
     );
   }
 }
@@ -233,7 +250,7 @@ class Counter extends StatelessWidget {
       String money = amount.split("-")[1];
       MoneyFormatterOutput fo =
           FlutterMoneyFormatter(amount: double.parse(money)).output;
-          return "-" + fo.compactNonSymbol;
+      return "-" + fo.compactNonSymbol;
     } else {
       print("positive");
       MoneyFormatterOutput fo =
