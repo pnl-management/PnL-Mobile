@@ -5,10 +5,10 @@ import 'package:loginui/bloc/getallcategories_bloc.dart';
 import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/transactionModel.dart';
 import 'package:loginui/models/userModel.dart';
+import 'package:loginui/ui/createtransaction.dart';
 import 'package:loginui/ui/widget/back_button.dart';
 
 class ShowCategories extends StatefulWidget {
-
   @override
   _ShowCategoriesState createState() => _ShowCategoriesState();
 }
@@ -92,20 +92,25 @@ class _ShowCategoriesState extends State<ShowCategories> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           print(snapshot.data.length);
-                          bloc.getCatesLength(
-                             snapshot.data.length);
-                          return GestureDetector(
-                            onTap: (){
-                              
-                            },
-                            child: Column(
-                              children: <Widget>[
-                                for (var data in snapshot.data)
-                                  PreventCard(
+                          bloc.getCatesLength(snapshot.data.length);
+                          child:
+                          return Column(
+                            children: <Widget>[
+                              for (var data in snapshot.data)
+                                GestureDetector(
+                                  onTap: () {
+                                    int cateId = data.cateId;
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CreateTransaction(
+                                                    cateId: cateId)));
+                                  },
+                                  child: PreventCard(
                                     title: data.cateName,
                                   ),
-                              ],
-                            ),
+                                ),
+                            ],
                           );
                         } else {
                           return CircularProgressIndicator(
@@ -123,7 +128,7 @@ class _ShowCategoriesState extends State<ShowCategories> {
                         if (snapshot.data == "See") {
                           return GestureDetector(
                             onTap: () {
-                              bloc.getAllCategories( offset);
+                              bloc.getAllCategories(offset);
                               offset = 10;
                             },
                             child: Container(

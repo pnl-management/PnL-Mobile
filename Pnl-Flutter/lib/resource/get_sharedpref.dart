@@ -8,7 +8,7 @@ class GetSharedPref{
     SharedPreferences pref = await SharedPreferences.getInstance();
     var object = pref.getString("account");
     print(object);
-    final user = json.decode(object);
+    User user = User.fromJSON(json.decode(object));
     return user;  
   }
 }

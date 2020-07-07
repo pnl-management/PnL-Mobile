@@ -73,6 +73,11 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                   kHeadingTextStyle.copyWith(color: Colors.white),
                             ),
                           );
+                          }else{
+                            return CircularProgressIndicator(
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF3383CD)),
+                              );
                           }
                           
                         }

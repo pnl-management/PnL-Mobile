@@ -32,6 +32,7 @@ class LoginValidations{
     String url = apiUrl + "/api/login";
     var response =
         await http.post(Uri.encodeFull(url), headers: {"Authorization": token});
+        print(response.body);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final participant = data['participant'];

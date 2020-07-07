@@ -22,28 +22,31 @@ class LoginBloc {
     if (result == null) {
       _user.sink.addError("Not signed up yet");
     } else {
+      print("else alo");
       SharedPreferences pref = await SharedPreferences.getInstance();
-      pref.setString("account", json.encode(result));
-      _user.sink.add(result);
+      print(pref.toString());
+      await pref.setString("account", json.encode(result));
+      print(result.role.toString());
       if (result.role.toString() == userRole) {
+        print("push");
         var navigator = Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => UserMenuPage(screen: UserHomeScreen())));
       }
       if (result.role.toString() == investorRole) {
-        var navigator = Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => InvestorHomeScreen()));
+        var navigator = Navigator.push(context,
+            MaterialPageRoute(builder: (context) => InvestorHomeScreen()));
       }
       return true;
     }
   }
+
   Future<void> logoutBloc(context) async {
     var loginValidation = new LoginValidations();
     await loginValidation.logout(context);
   }
+
   void dispose() {
     _user.close();
   }
