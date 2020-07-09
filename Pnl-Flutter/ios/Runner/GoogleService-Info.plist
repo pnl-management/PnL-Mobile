@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>395794764180-p4chob23st5ao9n2kolga3f6niko6bad.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.395794764180-p4chob23st5ao9n2kolga3f6niko6bad</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>395794764180-ip9l4dp0m5l2pg1mjid7hh71bb5rfbm3.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBHC3ttrZ7mXO_oIk2l4Xbx-9Wfxd4E7Mo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>395794764180</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.loginui</string>
+	<key>PROJECT_ID</key>
+	<string>pnlrepoter</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pnlrepoter.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:395794764180:ios:48af825e0510dd961cff81</string>
+	<key>DATABASE_URL</key>
+	<string>https://pnlrepoter.firebaseio.com</string>
+</dict>
+</plist>

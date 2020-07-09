@@ -1,36 +1,43 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
 import 'package:image_picker/image_picker.dart';
+import 'package:loginui/bloc/createtransaction_bloc.dart';
 import 'package:loginui/constant/constant.dart';
+import 'package:loginui/models/categoryModel.dart';
 import 'package:loginui/models/myfile.dart';
+import 'package:loginui/models/transactionModel.dart';
 import 'package:loginui/ui/widget/back_button.dart';
 import 'package:loginui/ui/widget/text_file.dart';
 
 class CreateTransaction extends StatefulWidget {
   final int cateId;
-  CreateTransaction({Key key, this.cateId}) : super(key: key);
+  final String cateName;
+  CreateTransaction({Key key, this.cateId, this.cateName}) : super(key: key);
   @override
   _CreateTransactionState createState() => _CreateTransactionState();
 }
 
 class _CreateTransactionState extends State<CreateTransaction> {
   TextEditingController nameController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
   TextEditingController moneyController = TextEditingController();
-
+  CreateTransactionBloc bloc = CreateTransactionBloc();
   TextEditingController desController = TextEditingController();
   List<MyFile> listImg;
+
   @override
   void initState() {
     listImg = List();
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -69,10 +76,22 @@ class _CreateTransactionState extends State<CreateTransaction> {
                         Positioned(
                           top: 20,
                           left: 150,
-                          child: Text(
-                            "\nTạo Giao Dịch",
-                            style:
-                                kHeadingTextStyle.copyWith(color: Colors.white),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                "Tạo Giao Dịch",
+                                style: kHeadingTextStyle.copyWith(
+                                    color: Colors.white),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                widget.cateName,
+                                style:
+                                    kSubTextStyle.copyWith(color: Colors.white),
+                              ),
+                            ],
                           ),
                         ),
                         Container(),
@@ -82,126 +101,96 @@ class _CreateTransactionState extends State<CreateTransaction> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: <Widget>[
-                  // Row(
-                  //   children: <Widget>[
-                  //     RichText(
-                  //       text: TextSpan(
-                  //         children: [
-                  //           TextSpan(
-                  //             text: "Mã Giao Dịch\n",
-                  //             style: kTitleTextstyle,
-                  //           ),
-                  //           TextSpan(
-                  //             text: "#XXXXXXXXX",
-                  //             style: TextStyle(
-                  //               color:kTextLightColor,
-                  //             )
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //     Spacer(),
-                  //   ],
-                  // ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  // PreventCard(
-                  //   title: "Trạng Thái",
-                  //   content: "Chờ phản hồi",
-                  //   height:100,
-                  // ),
-                  // PreventCard(
-                  //   title: "Loại Giao Dịch",
-                  //   content: "Chi phí",
-                  //   height:100,
-                  // ),
-                  MyTextField(
-                    label: "Tên Giao Dịch",
-                    controller: nameController,
-                    
-                  ),
-
-                  MyTextField(
+            Form(
+              key: formKey,
+                          child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    MyTextField(
+                      label: "Tên Giao Dịch",
+                      controller: nameController,
+                      validator: (value) {
+                        if (nameController.text.trim().isEmpty) {
+                          return "Name cannot be empty";
+                        }
+                        return null;
+                      },
+                    ),
+                    MyTextField(
                       label: "Số Tiền",
                       controller: moneyController,
-                      keyboard: TextInputType.number),
-                  MyTextField(
-                    label: "Mô Tả",
-                    controller: desController,
-                  ),
-                  Text('Chứng Từ',
-                  style: kHeadingTextStyle.copyWith(color: Colors.grey)),
-                  _buildListImg(),
-                  // ListTile(
-                  //   title: Text("Bằng Chứng:"),
-                  //   subtitle: Text(img.fileName ?? "Thêm Hình"),
-                  //   trailing: Icon(
-                  //     Icons.file_upload,
-                  //     color: Color(0xFF3383CD),
-                  //   ),
-                  //   onTap: () {
-                  //     ImagePicker()
-                  //         .getImage(source: ImageSource.camera)
-                  //         .then((value) {
-                  //       var file = File(value.path);
-                  //       var list = file.toString().split("/");
-                  //       var pic = list[list.length - 1].split("'")[0];
-                  //       setState(() {
-                  //         print(pic);
-                  //         img.fileName = pic.toString().split(".")[0];
-                  //         img.extension = pic.toString().split(".")[1];
-                  //         img.file = file;
-                  //       });
-                  //     });
-                  //   },
-                  // ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0, right: 10.0, top: 10.0),
-                          child: new Container(
-                            alignment: Alignment.center,
-                            height: 60.0,
-                            decoration: new BoxDecoration(
-                              color: kRecovercolor,
-                              borderRadius: new BorderRadius.circular(10.0),
+                      keyboard: TextInputType.number,
+                      validator: (value) {
+                        if (moneyController.text.trim().isEmpty) {
+                          return "Money cannot be empty";
+                        }
+                        return null;
+                      },
+                    ),
+                    MyTextField(
+                      label: "Mô Tả",
+                      controller: desController,
+                      validator: (value) {
+                        if (desController.text.trim().isEmpty) {
+                          return "Description cannot be empty";
+                        }
+                        return null;
+                      },
+                    ),
+                    Text('Chứng Từ',
+                        style: kHeadingTextStyle.copyWith(color: Colors.grey)),
+                    _buildListImg(),
+                    Row(
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            if(formKey.currentState.validate()){
+                              Transaction transaction = Transaction();
+                              transaction.transactionName = nameController.text;
+                              transaction.money = int.parse(moneyController.text);
+                              transaction.transactionDes = desController.text;
+                              Category category = Category();
+                              category.cateId = int.parse(widget.cateId.toString()); 
+                              if(listImg.length >= 1 ){
+
+                              }
+                              showDialogConfirmActive();
+                              bloc.createTransaction(transaction, category, listImg).then((value){
+                                Navigator.of(context).pop();
+                              });
+                            }
+                          },
+                          child: Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 20.0, right: 10.0, top: 10.0),
+                              child: new Container(
+                                alignment: Alignment.center,
+                                height: 60.0,
+                                width: width-80,
+                                decoration: new BoxDecoration(
+                                  color: kRecovercolor,
+                                  borderRadius: new BorderRadius.circular(10.0),
+                                ),
+                                child: new Text("Tạo Giao Dịch",
+                                    style: new TextStyle(
+                                        fontSize: 20.0, color: Colors.white)),
+                              ),
                             ),
-                            child: new Text("Tạo Giao Dịch",
-                                style: new TextStyle(
-                                    fontSize: 20.0, color: Colors.white)),
                           ),
                         ),
-                      ),
-                      // Expanded(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(
-                      //         left: 20.0, right: 10.0, top: 10.0),
-                      //     child: new Container(
-                      //       alignment: Alignment.center,
-                      //       height: 60.0,
-                      //       decoration: new BoxDecoration(
-                      //         color: Color(0xFFDF513B),
-                      //         borderRadius: new BorderRadius.circular(10.0),
-                      //       ),
-                      //       child: new Text("Từ Chối",
-                      //           style: new TextStyle(
-                      //               fontSize: 20.0, color: Colors.white)),
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                ],
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -209,6 +198,34 @@ class _CreateTransactionState extends State<CreateTransaction> {
       ),
     );
   }
+
+  void showDialogConfirmActive() {
+    showDialog(
+      context: this.context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Processing"),
+          content: Container(
+            height: 80,
+            child: Center(
+              child: Column(children: [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Please Wait....",
+                  style: TextStyle(color: Colors.blueAccent),
+                )
+              ]),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   _buildListImg() {
     if (listImg == null)
       return Container(
@@ -241,14 +258,15 @@ class _CreateTransactionState extends State<CreateTransaction> {
                     ),
                   ),
                   onPressed: () {
-                    ImagePicker.pickImage(source: ImageSource.gallery).then((img) {
+                    ImagePicker.pickImage(source: ImageSource.gallery)
+                        .then((img) {
                       MyFile fileImg = MyFile();
 
                       fileImg.file = img;
                       fileImg.url = img.path;
                       fileImg.isDelete = false;
                       fileImg.isNew = true;
-                      
+
                       this.setState(() {
                         listImg.add(fileImg);
                       });
@@ -264,7 +282,11 @@ class _CreateTransactionState extends State<CreateTransaction> {
   }
 
   _buildEachImg(MyFile img) {
-    if (img.isDelete) return Container(width: 0, height: 0,);
+    if (img.isDelete)
+      return Container(
+        width: 0,
+        height: 0,
+      );
     return Stack(
       children: [
         Container(
@@ -278,7 +300,9 @@ class _CreateTransactionState extends State<CreateTransaction> {
                 //border: Border.all(width: 1, color: Color(0xFF00C853)),
                 image: new DecorationImage(
                   fit: BoxFit.fitWidth,
-                  image: img.file == null ? new NetworkImage(img.url) : FileImage(img.file),
+                  image: img.file == null
+                      ? new NetworkImage(img.url)
+                      : FileImage(img.file),
                 ),
               ),
             ),
@@ -297,13 +321,15 @@ class _CreateTransactionState extends State<CreateTransaction> {
                 }
               });
             },
-            child: Icon(Icons.close, color: Color(0xFFF44336),),
+            child: Icon(
+              Icons.close,
+              color: Color(0xFFF44336),
+            ),
           ),
         ),
       ],
     );
   }
-
 }
 
 class PreventCard extends StatelessWidget {

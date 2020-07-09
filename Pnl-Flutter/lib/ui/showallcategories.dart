@@ -104,7 +104,7 @@ class _ShowCategoriesState extends State<ShowCategories> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 CreateTransaction(
-                                                    cateId: cateId)));
+                                                    cateId: cateId, cateName : data.cateName)));
                                   },
                                   child: PreventCard(
                                     title: data.cateName,
