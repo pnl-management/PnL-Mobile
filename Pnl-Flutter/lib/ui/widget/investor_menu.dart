@@ -2,21 +2,22 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:loginui/bloc/login_bloc.dart';
+import 'package:loginui/models/userModel.dart';
 import 'package:loginui/ui/user.dart';
 import 'package:rxdart/rxdart.dart';
 
-class UserMenuPage extends StatelessWidget {
+class InvestorMenuPage extends StatelessWidget {
   bool isCollapsed = true;
   final Widget screen;
 
-  UserMenuPage({Key key, this.screen}) : super(key: key);
+  InvestorMenuPage({Key key, this.screen}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
           screen ?? UserHomeScreen(),
-          UserSideBar(),
+          InvestorSideBar(),
         ],
       ),
     );
@@ -43,13 +44,13 @@ class UserMenuPage extends StatelessWidget {
   // }
 }
 
-class UserSideBar extends StatefulWidget {
+class InvestorSideBar extends StatefulWidget {
   @override
-  _UserSideBarState createState() => _UserSideBarState();
+  _InvestorSideBarState createState() => _InvestorSideBarState();
 }
 
-class _UserSideBarState extends State<UserSideBar>
-    with SingleTickerProviderStateMixin<UserSideBar> {
+class _InvestorSideBarState extends State<InvestorSideBar>
+    with SingleTickerProviderStateMixin<InvestorSideBar> {
   AnimationController animationController;
 
   final animationDuration = const Duration(milliseconds: 500);
@@ -120,7 +121,7 @@ class _UserSideBarState extends State<UserSideBar>
                       indent: 32,
                       endIndent: 32,
                     ),
-                    UserMenuItem(
+                    InvestorMenuItem(
                       icon: Icons.home,
                       title: "Home",
                       onTap: () {
@@ -144,7 +145,7 @@ class _UserSideBarState extends State<UserSideBar>
                     //     //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActorMenuPage(screen: UserSettingPage(),)));
                     //   },
                     // ),
-                    UserMenuItem(
+                    InvestorMenuItem(
                       icon: Icons.exit_to_app,
                       title: "Log Out",
                       onTap: () {
@@ -186,11 +187,11 @@ class _UserSideBarState extends State<UserSideBar>
   }
 }
 
-class UserMenuItem extends StatelessWidget {
+class InvestorMenuItem extends StatelessWidget {
   final IconData icon;
   final String title;
   final Function onTap;
-  const UserMenuItem({Key key, this.icon, this.title, this.onTap})
+  const InvestorMenuItem({Key key, this.icon, this.title, this.onTap})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

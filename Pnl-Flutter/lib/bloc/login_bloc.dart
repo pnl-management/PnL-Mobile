@@ -8,6 +8,7 @@ import 'package:loginui/ui/investor.dart';
 import 'dart:async';
 
 import 'package:loginui/ui/user.dart';
+import 'package:loginui/ui/widget/investor_menu.dart';
 import 'package:loginui/ui/widget/user_menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,7 +37,8 @@ class LoginBloc {
       }
       if (result.role.toString() == investorRole) {
         var navigator = Navigator.push(context,
-            MaterialPageRoute(builder: (context) => InvestorHomeScreen()));
+           MaterialPageRoute(
+                builder: (context) => InvestorMenuPage(screen: InvestorPage())));
       }
       return true;
     }

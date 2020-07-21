@@ -14,6 +14,6 @@ class MyFile{
   MyFile({this.extension,this.file,this.fileName, this.isDelete, this.url, this.isNew,this.transaction});
   Map toJson()=>{
     'url' : url,
-    'transaction' : {'id' : transaction.transactionId}
+    'receipt' : {'id' : transaction.transactionId}
   };
 }

@@ -8,7 +8,7 @@ import 'package:loginui/models/transactionModel.dart';
 class CreateTransactionsProvider {
   Future<int> createTransactions(
       String token, Transaction transaction, Category category) async {
-    String url = apiUrl + "/api/Transactions";
+    String url = apiUrl + "/api/receipts";
     print(url);
     var categoryBody = {
       'id': category.cateId,
@@ -37,7 +37,7 @@ class CreateTransactionsProvider {
   }
   Future<bool> createEvidences(
       String token,String transactionId ,List<MyFile> imageUrl) async {
-    String url = apiUrl + "/api/Transactions/" + transactionId + "/evidences";
+    String url = apiUrl + "/api/receipts/" + transactionId + "/evidences";
     print(url);
     var body = jsonEncode(imageUrl);
     print(body);

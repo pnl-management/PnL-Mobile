@@ -20,13 +20,15 @@ class InvesterTransaction{
         var des = current['description'];
         var category =current['category'];
         var type = category['type'];
+        var createdTime = current['createdTime'].toString().split("T")[0];
         print(name);
         Transaction transaction = new Transaction(
           transactionId: id.toString(),
           transactionName: name.toString(),
           transactionDes: des.toString(),
           transactionType: type.toString(),
-          money: int.parse(current['value'].toString())
+          money: int.parse(current['value'].toString()),
+          createdTime: createdTime
         );
         result.add(transaction);
       }

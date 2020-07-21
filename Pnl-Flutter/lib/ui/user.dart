@@ -8,7 +8,6 @@ import 'package:loginui/ui/showallcategories.dart';
 import 'package:loginui/ui/userseemore.dart';
 
 class UserHomeScreen extends StatefulWidget {
-  
   @override
   _UserHomeScreenState createState() => _UserHomeScreenState();
 }
@@ -19,13 +18,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   @override
   void initState() {
     // TODO: implement initState
-     bloc.getTotalTransactions();
+    bloc.getTotalTransactions();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-   
-
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -60,27 +58,15 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         fit: BoxFit.fitWidth,
                         alignment: Alignment.topCenter,
                       ),
-                      StreamBuilder<Object>(
-                        stream: bloc.userInfo,
-                        builder: (context, snapshot) {
-                          if(snapshot.hasData){
-                            return Positioned(
-                            top: 20,
-                            left: 180,
-                            child: Text(
-                              snapshot.data.toString().split("-")[0] + "\n" + snapshot.data.toString().split("-")[1],
-                              style:
-                                  kHeadingTextStyle.copyWith(color: Colors.white),
-                            ),
-                          );
-                          }else{
-                            return CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Color(0xFF3383CD)),
-                              );
-                          }
-                          
-                        }
+                      Positioned(
+                        top: 20,
+                        left: 180,
+                        child: Text(
+                          '',
+                          //snapshot.data.toString().split("-")[0] + "\n" + snapshot.data.toString().split("-")[1],
+                          style:
+                              kHeadingTextStyle.copyWith(color: Colors.white),
+                        ),
                       ),
                       Container(),
                     ],
@@ -119,8 +105,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      UserSeeMore()));
+                                  builder: (context) => UserSeeMore()));
                         },
                         child: Text(
                           "Xem thêm",
@@ -188,25 +173,27 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     height: 20,
                   ),
                   GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowCategories()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ShowCategories()));
                     },
-                                      child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey
-                          ),
-                          color: Colors.white
-                        ),
+                    child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            color: Colors.white),
                         child: Padding(
-                          padding: const EdgeInsets.only(left:45.0),
+                          padding: const EdgeInsets.only(left: 45.0),
                           child: Row(
                             children: <Widget>[
-                              Icon(Icons.add,color: Colors.grey),
-                              Text('ADD NEW TRANSACTION'
-                              ,style: TextStyle(color: Colors.grey),),
+                              Icon(Icons.add, color: Colors.grey),
+                              Text(
+                                'TẠO HOÁ ĐƠN MỚI',
+                                style: TextStyle(color: Colors.grey),
+                              ),
                             ],
                           ),
                         )),

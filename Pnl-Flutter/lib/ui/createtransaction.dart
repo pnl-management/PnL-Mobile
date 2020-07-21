@@ -1,8 +1,6 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:loginui/bloc/createtransaction_bloc.dart';
 import 'package:loginui/constant/constant.dart';
@@ -79,7 +77,7 @@ class _CreateTransactionState extends State<CreateTransaction> {
                           child: Column(
                             children: <Widget>[
                               Text(
-                                "Tạo Giao Dịch",
+                                "Tạo Hoá Đơn",
                                 style: kHeadingTextStyle.copyWith(
                                     color: Colors.white),
                               ),
@@ -103,7 +101,7 @@ class _CreateTransactionState extends State<CreateTransaction> {
             ),
             Form(
               key: formKey,
-                          child: Padding(
+              child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: <Widget>[
@@ -111,7 +109,7 @@ class _CreateTransactionState extends State<CreateTransaction> {
                       height: 20,
                     ),
                     MyTextField(
-                      label: "Tên Giao Dịch",
+                      label: "Tên Hoá Đơn",
                       controller: nameController,
                       validator: (value) {
                         if (nameController.text.trim().isEmpty) {
@@ -142,25 +140,28 @@ class _CreateTransactionState extends State<CreateTransaction> {
                       },
                     ),
                     Text('Chứng Từ',
-                        style: kHeadingTextStyle.copyWith(color: Colors.grey)),
+                        style: kHeadingTextStyle.copyWith(color: Colors.blue[800])),
                     _buildListImg(),
                     Row(
                       children: <Widget>[
                         GestureDetector(
                           onTap: () {
                             FocusScope.of(context).unfocus();
-                            if(formKey.currentState.validate()){
+                            if (formKey.currentState.validate()) {
                               Transaction transaction = Transaction();
                               transaction.transactionName = nameController.text;
-                              transaction.money = int.parse(moneyController.text);
+                              transaction.money =
+                                  int.parse(moneyController.text);
                               transaction.transactionDes = desController.text;
                               Category category = Category();
-                              category.cateId = int.parse(widget.cateId.toString()); 
-                              if(listImg.length >= 1 ){
-
-                              }
+                              category.cateId =
+                                  int.parse(widget.cateId.toString());
+                              if (listImg.length >= 1) {}
                               showDialogConfirmActive();
-                              bloc.createTransaction(transaction, category, listImg).then((value){
+                              bloc
+                                  .createTransaction(
+                                      transaction, category, listImg)
+                                  .then((value) {
                                 Navigator.of(context).pop();
                               });
                             }
@@ -172,12 +173,12 @@ class _CreateTransactionState extends State<CreateTransaction> {
                               child: new Container(
                                 alignment: Alignment.center,
                                 height: 60.0,
-                                width: width-80,
+                                width: width - 80,
                                 decoration: new BoxDecoration(
                                   color: kRecovercolor,
                                   borderRadius: new BorderRadius.circular(10.0),
                                 ),
-                                child: new Text("Tạo Giao Dịch",
+                                child: new Text("Tạo Hoá Đơn ",
                                     style: new TextStyle(
                                         fontSize: 20.0, color: Colors.white)),
                               ),
