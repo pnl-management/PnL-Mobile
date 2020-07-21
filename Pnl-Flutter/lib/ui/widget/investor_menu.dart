@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:loginui/bloc/login_bloc.dart';
-import 'package:loginui/models/userModel.dart';
+
+import 'package:loginui/ui/investor.dart';
 import 'package:loginui/ui/showallstore.dart';
-import 'package:loginui/ui/unknown.dart';
+
 import 'package:loginui/ui/user.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -128,7 +129,9 @@ class _InvestorSideBarState extends State<InvestorSideBar>
                       title: "Trang Chủ",
                       onTap: () {
                         onIconPressed();
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => InvestorMenuPage(screen: InvestorPage())));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                InvestorMenuPage(screen: InvestorPage())));
                       },
                     ),
                     InvestorMenuItem(
@@ -136,7 +139,8 @@ class _InvestorSideBarState extends State<InvestorSideBar>
                       title: "Danh sách cửa hàng",
                       onTap: () {
                         onIconPressed();
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShowStores()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ShowStores()));
                       },
                     ),
                     Divider(
@@ -146,21 +150,13 @@ class _InvestorSideBarState extends State<InvestorSideBar>
                       indent: 32,
                       endIndent: 32,
                     ),
-                    // ActorMenuItem(
-                    //   icon: Icons.settings,
-                    //   title: "Setting",
-                    //   onTap: () {
-                    //     onIconPressed();
-                    //     print("press setting");
-                    //     //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActorMenuPage(screen: UserSettingPage(),)));
-                    //   },
-                    // ),
+                    
                     InvestorMenuItem(
                       icon: Icons.exit_to_app,
                       title: "Đăng Xuất",
                       onTap: () {
                         onIconPressed();
-                        print("press logout");
+                        
                         var loginBloc = LoginBloc();
                         loginBloc.logoutBloc(context);
                       },

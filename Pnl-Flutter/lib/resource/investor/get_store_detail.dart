@@ -6,7 +6,7 @@ import 'package:loginui/models/storeModel.dart';
 class GetStoreDetail {
   Future<Store> getStoreDetailProvider(String token, int id) async {
     String url = apiUrl + "/api/stores/" + id.toString();
-    print(url);
+    
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token});
 

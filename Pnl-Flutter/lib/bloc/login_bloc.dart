@@ -17,20 +17,19 @@ class LoginBloc {
   Stream get userStream => _user.stream;
 
   Future<bool> loginRole(context) async {
-    print("bloc alo");
-   
+    
     var loginValidation = new LoginValidations();
     var result = await loginValidation.login();
     if (result == null) {
       _user.sink.addError("Not signed up yet");
     } else {
-      print("else alo");
+      
       SharedPreferences pref = await SharedPreferences.getInstance();
-      print(pref.toString());
+     
       await pref.setString("account", json.encode(result));
-      print(result.role.toString());
+      
       if (result.role.toString() == userRole) {
-        print("push");
+        
         var navigator = Navigator.pushReplacement(
             context,
             MaterialPageRoute(

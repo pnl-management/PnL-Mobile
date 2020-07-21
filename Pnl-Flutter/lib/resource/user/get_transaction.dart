@@ -7,7 +7,7 @@ class GetTransactions {
   Future<List<String>> getTotal(String token) async {
     
     String url = apiUrl + "/api/Transactions/Index";
-    print(url);
+    
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token});
     List<String> list = new List();
@@ -43,7 +43,7 @@ class GetTransactions {
 
   Future<List<Transaction>> seeAllTransaction(String token) async {
     String url = apiUrl + "/api/Transactions/Index";
-    print(url);
+    
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token});
     if (response.statusCode == 200) {

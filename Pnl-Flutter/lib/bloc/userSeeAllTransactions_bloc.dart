@@ -13,7 +13,7 @@ class UserSeeAllTransactionsBloc{
   
   Future<bool> showAllTransaction() async{
     
-    print("bloc alo");
+    
     var user = await GetSharedPref().getUserInfo();
     String token = user.token;
     String name = user.fullName;

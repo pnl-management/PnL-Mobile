@@ -16,7 +16,7 @@ class LoginValidations{
 
   }
   Future<User> login() async {
-    print("validation alo");
+    
     GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth =
         await googleSignInAccount.authentication;
@@ -27,12 +27,12 @@ class LoginValidations{
     String token;
     await currentUser.getIdToken().then((value) {
       token = value.token;
-      print("Main Token:" + token);
+      
     });
     String url = apiUrl + "/api/login";
     var response =
         await http.post(Uri.encodeFull(url), headers: {"Authorization": token});
-        print(response.body);
+        
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final participant = data['participant'];

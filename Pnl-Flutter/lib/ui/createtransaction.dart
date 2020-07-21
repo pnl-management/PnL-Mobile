@@ -313,7 +313,7 @@ class _CreateTransactionState extends State<CreateTransaction> {
           alignment: Alignment.topRight,
           child: GestureDetector(
             onTap: () {
-              print('tap ' + listImg.indexOf(img).toString());
+              
               this.setState(() {
                 if (img.isNew) {
                   listImg.removeAt(listImg.indexOf(img));

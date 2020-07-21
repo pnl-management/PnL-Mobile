@@ -7,7 +7,7 @@ class GetSharedPref{
   Future<User> getUserInfo() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var object = pref.getString("account");
-    print(object);
+    
     User user = User.fromJSON(json.decode(object));
     return user;  
   }

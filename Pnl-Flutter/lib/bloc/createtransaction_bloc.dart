@@ -21,7 +21,7 @@ class CreateTransactionBloc {
     var createTransaction = CreateTransactionsProvider();
     var check = await createTransaction.createTransactions(token, transaction, category);
     transaction.transactionId = check.toString();
-    print(check);
+    
     if (check != null) {
       for (var img in listImg) {
         if (!img.isDelete && img.isNew) {
@@ -32,7 +32,7 @@ class CreateTransactionBloc {
           uploadTask = storageReference.putFile(img.file);
           await uploadTask.onComplete;
           await storageReference.getDownloadURL().then((value) {
-            print(value);
+            
             img.url = value;
             img.transaction = transaction;
           });
@@ -40,7 +40,7 @@ class CreateTransactionBloc {
       }
       var result = await createTransaction.createEvidences(
         token, transaction.transactionId, listImg);
-        print(result);
+        
         if(result){
           return true;
         }

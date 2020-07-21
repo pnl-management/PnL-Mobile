@@ -135,21 +135,13 @@ class _UserSideBarState extends State<UserSideBar>
                       indent: 32,
                       endIndent: 32,
                     ),
-                    // ActorMenuItem(
-                    //   icon: Icons.settings,
-                    //   title: "Setting",
-                    //   onTap: () {
-                    //     onIconPressed();
-                    //     print("press setting");
-                    //     //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActorMenuPage(screen: UserSettingPage(),)));
-                    //   },
-                    // ),
+                    
                     UserMenuItem(
                       icon: Icons.exit_to_app,
                       title: "Đăng Xuất",
                       onTap: () {
                         onIconPressed();
-                        print("press logout");
+                        
                         var loginBloc = LoginBloc();
                         loginBloc.logoutBloc(context);
                       },

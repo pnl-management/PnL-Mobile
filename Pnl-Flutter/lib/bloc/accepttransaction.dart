@@ -1,9 +1,4 @@
 import 'dart:async';
-
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:loginui/models/categoryModel.dart';
-import 'package:loginui/models/myfile.dart';
-import 'package:loginui/models/transactionModel.dart';
 import 'package:loginui/resource/get_sharedpref.dart';
 import 'package:loginui/resource/investor/accept_transaction.dart';
 

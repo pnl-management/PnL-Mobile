@@ -17,7 +17,7 @@ class UserTotalTransactionBloc{
     String token = user.token;
     String brandName =  user.brandName;
     String storeName = user.storeName;
-    print("bloc alo");
+    
     var getTransaction = new GetTransactions();
     var result = await getTransaction.getTotal(token);
     if(result==null){

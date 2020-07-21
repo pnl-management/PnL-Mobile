@@ -10,7 +10,7 @@ class AcceptTransactionProvider {
         transactionId.toString() +
         "/journeys?type=" +
         type;
-    print(url);
+    
     var transaction = { 'id' : transactionId};
     var body = json.encode({
       'feedback': feedback,
@@ -18,7 +18,7 @@ class AcceptTransactionProvider {
     });
     var response = await http.post(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token,"Content-Type": "application/json"}, body: body);
-        print(response.body);
+       
     if (response.statusCode == 201) {
       return true;
     }else{

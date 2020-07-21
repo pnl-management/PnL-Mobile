@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:loginui/bloc/getallcategories_bloc.dart';
 import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/transactionModel.dart';
-import 'package:loginui/models/userModel.dart';
 import 'package:loginui/ui/createtransaction.dart';
 import 'package:loginui/ui/widget/back_button.dart';
 
@@ -91,7 +90,7 @@ class _ShowCategoriesState extends State<ShowCategories> {
                       stream: bloc.getAll,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          print(snapshot.data.length);
+                          
                           bloc.getCatesLength(snapshot.data.length);
                           child:
                           return Column(

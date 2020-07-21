@@ -17,7 +17,7 @@ class GetAllStoresBloc
     String token = user.token;
     var getAllStore = GetStores();
     var result = await getAllStore.getStoresProvider(token);
-    print(result.length);
+    
     if(result!=null){
       list.addAll(result);
       getAllStoresStream.sink.add(list);

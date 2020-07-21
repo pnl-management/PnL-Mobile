@@ -8,7 +8,7 @@ class GetStores {
 
   Future<List<Store>> getStoresProvider(String token) async {
     String url = apiUrl + "/api/brands/stores";
-    print(url);
+    
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token});
     List<Store> listStore = List();
@@ -32,7 +32,7 @@ class GetStores {
   }
   Future<int> getCatesLength(String token) async {
     String url = apiUrl + "/api/brands/transaction-categories/length";
-    print(url);
+    
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token});
     if(response.statusCode == 200){

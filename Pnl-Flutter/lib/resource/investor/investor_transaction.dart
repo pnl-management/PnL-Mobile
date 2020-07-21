@@ -13,7 +13,7 @@ class InvesterTransaction{
       var data = json.decode(response.body);
       List currentPeriod = data;
       List<Transaction> result = new List();
-      print("status code 200");
+      
       for(var current in currentPeriod){
         var id = current['id'];
         var name = current['name'];
@@ -21,7 +21,7 @@ class InvesterTransaction{
         var category =current['category'];
         var type = category['type'];
         var createdTime = current['createdTime'].toString().split("T")[0];
-        print(name);
+        
         Transaction transaction = new Transaction(
           transactionId: id.toString(),
           transactionName: name.toString(),

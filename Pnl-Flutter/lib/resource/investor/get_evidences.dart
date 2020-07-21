@@ -6,7 +6,7 @@ class GetEvidences {
 
   Future<List<String>> getEvidence(String token, int transactionId) async {
     String url = apiUrl + "/api/transactions/" +transactionId.toString() + "/evidences/";
-    print(url);
+    
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token});
     List<String> list = List();

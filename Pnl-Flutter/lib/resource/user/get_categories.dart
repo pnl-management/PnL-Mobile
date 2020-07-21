@@ -7,7 +7,7 @@ class GetCategories {
 
   Future<List<Category>> getCates(String token, int offset) async {
     String url = apiUrl + "/api/brands/transaction-categories?offset="+offset.toString();
-    print(url);
+    
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token});
     List<Category> listCate = List();
@@ -32,7 +32,7 @@ class GetCategories {
   }
   Future<int> getCatesLength(String token) async {
     String url = apiUrl + "/api/brands/transaction-categories/length";
-    print(url);
+    
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Authorization": "Bearer " + token});
     if(response.statusCode == 200){

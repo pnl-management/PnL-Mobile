@@ -15,8 +15,6 @@ class GetEvidenceBloc{
     String token = user.token;
     var getAllEvidence = GetEvidences();
     var result = await getAllEvidence.getEvidence(token, transactionId);
-    print(result.length);
-    print(list.length);
     if(result!=null){
       list.addAll(result);
       getEvidenceStream.sink.add(list);

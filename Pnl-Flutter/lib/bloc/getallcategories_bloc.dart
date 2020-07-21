@@ -16,8 +16,7 @@ class GetAllCategoriesBloc{
     String token = user.token;
     var getAllCategory = GetCategories();
     var result = await getAllCategory.getCates(token,offset);
-    print(result.length);
-    print(list.length);
+    
     if(result!=null){
       list.addAll(result);
       getAllCategoriesStream.sink.add(list);

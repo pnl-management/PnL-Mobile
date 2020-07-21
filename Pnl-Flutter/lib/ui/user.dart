@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:loginui/bloc/userTotalTransaction_bloc.dart';
 import 'package:loginui/constant/constant.dart';
-import 'package:loginui/models/userModel.dart';
-import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:loginui/ui/showallcategories.dart';
 import 'package:loginui/ui/userseemore.dart';
 
@@ -259,18 +258,15 @@ class Counter extends StatelessWidget {
   }
 
   String formatMoney(String amount) {
-    print(amount);
     if (amount.contains("-")) {
-      print("negative");
       String money = amount.split("-")[1];
       MoneyFormatterOutput fo =
           FlutterMoneyFormatter(amount: double.parse(money)).output;
       return "-" + fo.compactNonSymbol;
     } else {
-      print("positive");
       MoneyFormatterOutput fo =
           FlutterMoneyFormatter(amount: double.parse(amount)).output;
-      print(fo.compactNonSymbol);
+
       return fo.compactNonSymbol;
     }
   }

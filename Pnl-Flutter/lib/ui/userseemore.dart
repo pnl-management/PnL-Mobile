@@ -5,7 +5,6 @@ import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 import 'package:loginui/bloc/userSeeAllTransactions_bloc.dart';
 import 'package:loginui/constant/constant.dart';
 import 'package:loginui/models/transactionModel.dart';
-import 'package:loginui/models/userModel.dart';
 import 'package:loginui/ui/widget/back_button.dart';
 
 class UserSeeMore extends StatelessWidget {
@@ -51,11 +50,6 @@ class UserSeeMore extends StatelessWidget {
                             if (snapshot.hasData) {
                               return Stack(
                                 children: <Widget>[
-                                  // SvgPicture.asset("assets/icons/investor.svg",
-                                  // width: 200,
-                                  // fit: BoxFit.fitWidth,
-                                  // alignment: Alignment.topCenter,
-                                  // ),
                                   Positioned(
                                     top: 60,
                                     left: 40,
@@ -147,30 +141,30 @@ class PreventCard extends StatelessWidget {
     this.type,
   }) : super(key: key);
   Color getColor(int type) {
-    print("Type " + type.toString());
+    
     if (type.toString() == revenue) {
-      print("return " + kRecovercolor.toString());
+     
       return kRecovercolor;
     }
     if (type.toString() == expense) {
-      print("return " + kDeathColor.toString());
+      
       return kDeathColor;
     }
   }
 
   String formatMoney(String amount) {
-    print(amount);
+   
     if (amount.contains("-")) {
-      print("negative");
+      
       String money = amount.split("-")[1];
       MoneyFormatterOutput fo =
           FlutterMoneyFormatter(amount: double.parse(money)).output;
       return "-" + fo.compactNonSymbol;
     } else {
-      print("positive");
+      
       MoneyFormatterOutput fo =
           FlutterMoneyFormatter(amount: double.parse(amount)).output;
-      print(fo.compactNonSymbol);
+      
       return fo.compactNonSymbol;
     }
   }

@@ -12,7 +12,7 @@ class InvestorHomePageBloc{
   Stream get periodTransactionStream =>  _periodTransaction.stream;
 
   Future<bool> getTotalTransactions() async{
-    print("bloc alo");
+    
     var user = await GetSharedPref().getUserInfo();
     String name = user.fullName;
     String token = user.token;
@@ -23,7 +23,7 @@ class InvestorHomePageBloc{
       _investorTransations.sink.addError("There is no transaction to show");
       return false;
     }else{
-      print(result[0].period);
+      
       _investorTransations.sink.add(result);
       _periodTransaction.sink.add(result[0].period);
       return true;

@@ -68,8 +68,7 @@ class _InvestorPageState extends State<InvestorPage> {
                                   child: Container(
                                     width: 150,
                                     child: Text(
-                                              "Xin Chào \nÔng " +
-                                          snapshot.data,
+                                      "Xin Chào \nÔng " + snapshot.data,
                                       style: kHeadingTextStyle.copyWith(
                                           color: Colors.white),
                                     ),
@@ -201,18 +200,15 @@ class PreventCard extends StatelessWidget {
   }
 
   String formatMoney(String amount) {
-    print(amount);
     if (amount.contains("-")) {
-      print("negative");
       String money = amount.split("-")[1];
       MoneyFormatterOutput fo =
           FlutterMoneyFormatter(amount: double.parse(money)).output;
       return "-" + fo.compactNonSymbol;
     } else {
-      print("positive");
       MoneyFormatterOutput fo =
           FlutterMoneyFormatter(amount: double.parse(amount)).output;
-      print(fo.compactNonSymbol);
+
       return fo.compactNonSymbol;
     }
   }
