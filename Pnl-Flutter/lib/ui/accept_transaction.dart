@@ -56,9 +56,7 @@ class _AcceptTransactionState extends State<AcceptTransaction> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Align(alignment: Alignment.topLeft, child: MyBackButton()),
-                    Align(
-                        alignment: Alignment.topRight,
-                        child: SvgPicture.asset("assets/icons/menu.svg")),
+                    
                     SizedBox(
                       height: 20,
                     ),

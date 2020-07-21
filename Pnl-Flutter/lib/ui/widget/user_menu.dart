@@ -122,7 +122,7 @@ class _UserSideBarState extends State<UserSideBar>
                     ),
                     UserMenuItem(
                       icon: Icons.home,
-                      title: "Home",
+                      title: "Trang Chủ",
                       onTap: () {
                         onIconPressed();
                         //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActorMenuPage(screen: HomePage())));
@@ -146,7 +146,7 @@ class _UserSideBarState extends State<UserSideBar>
                     // ),
                     UserMenuItem(
                       icon: Icons.exit_to_app,
-                      title: "Log Out",
+                      title: "Đăng Xuất",
                       onTap: () {
                         onIconPressed();
                         print("press logout");

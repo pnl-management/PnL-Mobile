@@ -18,6 +18,7 @@ class LoginBloc {
 
   Future<bool> loginRole(context) async {
     print("bloc alo");
+   
     var loginValidation = new LoginValidations();
     var result = await loginValidation.login();
     if (result == null) {

@@ -45,7 +45,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  //MyBackButton(),
                   SizedBox(
                     height: 20,
                   ),
@@ -58,16 +57,23 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         fit: BoxFit.fitWidth,
                         alignment: Alignment.topCenter,
                       ),
-                      Positioned(
-                        top: 20,
-                        left: 180,
-                        child: Text(
-                          '',
-                          //snapshot.data.toString().split("-")[0] + "\n" + snapshot.data.toString().split("-")[1],
-                          style:
-                              kHeadingTextStyle.copyWith(color: Colors.white),
-                        ),
-                      ),
+                      StreamBuilder<Object>(
+                          stream: null,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Positioned(
+                                top: 20,
+                                left: 180,
+                                child: Text(
+                                  snapshot.data,
+                                  style: kHeadingTextStyle.copyWith(
+                                      color: Colors.white),
+                                ),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }),
                       Container(),
                     ],
                   )),

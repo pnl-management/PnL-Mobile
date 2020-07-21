@@ -5,6 +5,7 @@ import 'package:loginui/models/transactionModel.dart';
 
 class GetTransactions {
   Future<List<String>> getTotal(String token) async {
+    
     String url = apiUrl + "/api/Transactions/Index";
     print(url);
     var response = await http.get(Uri.encodeFull(url),

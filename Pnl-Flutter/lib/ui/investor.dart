@@ -58,13 +58,27 @@ class _InvestorPageState extends State<InvestorPage> {
                           fit: BoxFit.fitWidth,
                           alignment: Alignment.topCenter,
                         ),
-                        Positioned(
-                          top: 20,
-                          left: 200,
-                          child: Text(''
-                              //"Xin Chào \nÔng " + user.fullName,style: kHeadingTextStyle.copyWith(color: Colors.white) ,
-                              ),
-                        ),
+                        StreamBuilder(
+                            stream: bloc.investorInfoStream,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Positioned(
+                                  top: 20,
+                                  left: 180,
+                                  child: Container(
+                                    width: 150,
+                                    child: Text(
+                                              "Xin Chào \nÔng " +
+                                          snapshot.data,
+                                      style: kHeadingTextStyle.copyWith(
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            }),
                         Container(),
                       ],
                     )),

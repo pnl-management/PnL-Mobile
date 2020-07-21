@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:loginui/bloc/login_bloc.dart';
 import 'package:loginui/models/userModel.dart';
+import 'package:loginui/ui/showallstore.dart';
+import 'package:loginui/ui/unknown.dart';
 import 'package:loginui/ui/user.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -123,10 +125,18 @@ class _InvestorSideBarState extends State<InvestorSideBar>
                     ),
                     InvestorMenuItem(
                       icon: Icons.home,
-                      title: "Home",
+                      title: "Trang Chủ",
                       onTap: () {
                         onIconPressed();
-                        //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ActorMenuPage(screen: HomePage())));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => InvestorMenuPage(screen: InvestorPage())));
+                      },
+                    ),
+                    InvestorMenuItem(
+                      icon: Icons.store,
+                      title: "Danh sách cửa hàng",
+                      onTap: () {
+                        onIconPressed();
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShowStores()));
                       },
                     ),
                     Divider(
@@ -147,7 +157,7 @@ class _InvestorSideBarState extends State<InvestorSideBar>
                     // ),
                     InvestorMenuItem(
                       icon: Icons.exit_to_app,
-                      title: "Log Out",
+                      title: "Đăng Xuất",
                       onTap: () {
                         onIconPressed();
                         print("press logout");
